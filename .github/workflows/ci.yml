@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck & build
+        run: npm run build
+
+      - name: Validate JSON schemas
+        run: |
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+            const dir = './schemas';
+            const files = fs.readdirSync(dir).filter(f => f.endsWith('.json'));
+            let ok = true;
+            for (const f of files) {
+              try {
+                JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+                console.log('  OK:', f);
+              } catch (e) {
+                console.error('FAIL:', f, e.message);
+                ok = false;
+              }
+            }
+            if (!ok) process.exit(1);
+            console.log('All', files.length, 'schemas valid');
+          "
