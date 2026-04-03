@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qrop.io/schemas/emergency-stop.json",
+  "title": "EmergencyStop",
+  "description": "Emergency stop command. Published to qrop/robots/{id}/commands/emergency-stop or qrop/coordinators/{id}/commands/emergency-stop",
+  "type": "object",
+  "required": ["timestamp", "reason", "issued_by"],
+  "properties": {
+    "timestamp": {
+      "type": "integer",
+      "description": "Unix timestamp in seconds"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Why the emergency stop was triggered"
+    },
+    "issued_by": {
+      "type": "string",
+      "description": "Who/what triggered the stop (user ID, system, safety-monitor)"
+    },
+    "scope": {
+      "type": "string",
+      "enum": ["single_robot", "all_robots", "farm"],
+      "default": "single_robot",
+      "description": "Scope of the emergency stop"
+    },
+    "target_robot_id": {
+      "type": ["string", "null"],
+      "description": "Specific robot to stop, if scope is single_robot"
+    }
+  }
+}

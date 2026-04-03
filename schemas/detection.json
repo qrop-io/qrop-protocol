@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qrop.io/schemas/detection.json",
+  "title": "Detection",
+  "description": "Weed, obstacle, or crop detection event. Published to qrop/robots/{id}/events/detection",
+  "type": "object",
+  "required": ["detection_id", "robot_id", "timestamp", "detection_type", "position", "confidence"],
+  "properties": {
+    "detection_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "robot_id": {
+      "type": "string"
+    },
+    "mission_id": {
+      "type": ["string", "null"],
+      "description": "Mission during which detection occurred"
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "Unix timestamp in milliseconds"
+    },
+    "detection_type": {
+      "type": "string",
+      "enum": ["weed", "crop", "obstacle", "boundary"],
+      "description": "What was detected"
+    },
+    "position": {
+      "$ref": "geo-position.json",
+      "description": "Georeferenced location of the detection"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Model confidence score"
+    },
+    "species": {
+      "type": ["string", "null"],
+      "description": "Identified plant species, if applicable"
+    },
+    "bounding_box": {
+      "type": "object",
+      "description": "Pixel-space bounding box in the source image",
+      "properties": {
+        "x": { "type": "integer" },
+        "y": { "type": "integer" },
+        "width": { "type": "integer" },
+        "height": { "type": "integer" }
+      }
+    },
+    "image_ref": {
+      "type": ["string", "null"],
+      "description": "Reference to the captured image (local path or ID)"
+    },
+    "action_taken": {
+      "type": ["string", "null"],
+      "enum": [null, "marked", "eliminated", "avoided"],
+      "description": "What the robot did about this detection"
+    }
+  }
+}

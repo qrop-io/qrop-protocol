@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qrop.io/schemas/robot-telemetry.json",
+  "title": "RobotTelemetry",
+  "description": "High-frequency sensor data published to qrop/robots/{robot_id}/telemetry",
+  "type": "object",
+  "required": ["robot_id", "timestamp"],
+  "properties": {
+    "robot_id": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "Unix timestamp in milliseconds"
+    },
+    "position": {
+      "$ref": "geo-position.json"
+    },
+    "velocity_mps": {
+      "type": "number",
+      "description": "Ground speed in meters per second"
+    },
+    "imu": {
+      "type": "object",
+      "properties": {
+        "roll_deg": { "type": "number" },
+        "pitch_deg": { "type": "number" },
+        "yaw_deg": { "type": "number" },
+        "accel_x": { "type": "number" },
+        "accel_y": { "type": "number" },
+        "accel_z": { "type": "number" }
+      },
+      "description": "Inertial measurement unit readings"
+    },
+    "motor_temps_c": {
+      "type": "array",
+      "items": { "type": "number" },
+      "description": "Motor temperatures in Celsius"
+    },
+    "cpu_temp_c": {
+      "type": "number",
+      "description": "Onboard computer temperature"
+    },
+    "wifi_rssi_dbm": {
+      "type": "integer",
+      "description": "WiFi signal strength"
+    }
+  }
+}

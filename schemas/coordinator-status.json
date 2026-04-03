@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qrop.io/schemas/coordinator-status.json",
+  "title": "CoordinatorStatus",
+  "description": "Coordinator heartbeat published to qrop/coordinators/{coordinator_id}/status",
+  "type": "object",
+  "required": ["coordinator_id", "farm_id", "status", "timestamp"],
+  "properties": {
+    "coordinator_id": {
+      "type": "string",
+      "description": "Unique coordinator identifier"
+    },
+    "farm_id": {
+      "type": "string",
+      "description": "Farm this coordinator belongs to"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["online", "offline", "syncing", "error"],
+      "description": "Coordinator operational state"
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "Unix timestamp in seconds"
+    },
+    "connected_robots": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of robots currently connected"
+    },
+    "active_missions": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of missions currently running"
+    },
+    "cloud_connected": {
+      "type": "boolean",
+      "description": "Whether the coordinator can reach the cloud dashboard"
+    },
+    "last_cloud_sync": {
+      "type": ["integer", "null"],
+      "description": "Unix timestamp of last successful sync with dashboard"
+    },
+    "version": {
+      "type": "string",
+      "description": "Coordinator software version"
+    }
+  }
+}

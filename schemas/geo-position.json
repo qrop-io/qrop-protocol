@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qrop.io/schemas/geo-position.json",
+  "title": "GeoPosition",
+  "description": "Geographic position with accuracy metadata",
+  "type": "object",
+  "required": ["lat", "lon"],
+  "properties": {
+    "lat": {
+      "type": "number",
+      "minimum": -90,
+      "maximum": 90,
+      "description": "Latitude in decimal degrees (WGS84)"
+    },
+    "lon": {
+      "type": "number",
+      "minimum": -180,
+      "maximum": 180,
+      "description": "Longitude in decimal degrees (WGS84)"
+    },
+    "altitude_m": {
+      "type": "number",
+      "description": "Altitude in meters above sea level"
+    },
+    "heading_deg": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 360,
+      "description": "Heading in degrees from true north"
+    },
+    "accuracy_m": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Horizontal accuracy in meters (CEP)"
+    },
+    "fix_type": {
+      "type": "string",
+      "enum": ["none", "gps", "dgps", "rtk_float", "rtk_fixed"],
+      "description": "GNSS fix quality"
+    }
+  }
+}

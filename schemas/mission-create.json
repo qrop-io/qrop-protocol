@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qrop.io/schemas/mission-create.json",
+  "title": "MissionCreate",
+  "description": "Command to create a new mission. Published to qrop/coordinators/{id}/commands/mission/create",
+  "type": "object",
+  "required": ["mission_type", "farm_id", "area"],
+  "properties": {
+    "mission_type": {
+      "type": "string",
+      "enum": ["scan", "weed", "patrol", "return_home"]
+    },
+    "farm_id": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10,
+      "default": 5
+    },
+    "assigned_robot_id": {
+      "type": ["string", "null"],
+      "description": "Specific robot to assign, or null for auto-assignment"
+    },
+    "area": {
+      "type": "object",
+      "description": "GeoJSON polygon defining the mission area",
+      "required": ["type", "coordinates"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "Polygon"
+        },
+        "coordinates": {
+          "type": "array"
+        }
+      }
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Mission-type-specific parameters"
+    },
+    "scheduled_at": {
+      "type": ["integer", "null"],
+      "description": "Unix timestamp to start the mission, or null for immediate"
+    }
+  }
+}

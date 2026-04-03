@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qrop.io/schemas/mission.json",
+  "title": "Mission",
+  "description": "A mission definition — a high-level task assigned to one or more robots",
+  "type": "object",
+  "required": ["mission_id", "mission_type", "farm_id", "created_at", "status"],
+  "properties": {
+    "mission_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique mission identifier"
+    },
+    "mission_type": {
+      "type": "string",
+      "enum": ["scan", "weed", "patrol", "return_home"],
+      "description": "Type of mission"
+    },
+    "farm_id": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "integer",
+      "description": "Unix timestamp when the mission was created"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "User or system that created the mission"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "assigned", "in_progress", "paused", "completed", "failed", "cancelled"],
+      "description": "Current mission state"
+    },
+    "assigned_robot_id": {
+      "type": ["string", "null"],
+      "description": "Robot assigned to execute this mission"
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10,
+      "default": 5,
+      "description": "Priority (0=lowest, 10=highest)"
+    },
+    "area": {
+      "type": "object",
+      "description": "GeoJSON polygon defining the mission area",
+      "required": ["type", "coordinates"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "Polygon"
+        },
+        "coordinates": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": { "type": "number" },
+              "minItems": 2,
+              "maxItems": 3
+            }
+          }
+        }
+      }
+    },
+    "waypoints": {
+      "type": "array",
+      "items": {
+        "$ref": "geo-position.json"
+      },
+      "description": "Ordered waypoints the robot should follow"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Mission-type-specific parameters",
+      "properties": {
+        "scan_resolution_m": {
+          "type": "number",
+          "description": "Grid resolution for scan missions"
+        },
+        "weed_confidence_threshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Minimum confidence to target a weed"
+        },
+        "max_speed_mps": {
+          "type": "number",
+          "description": "Maximum ground speed"
+        }
+      }
+    }
+  }
+}

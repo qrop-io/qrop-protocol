@@ -1,0 +1,23 @@
+{
+  "name": "@qrop/protocol",
+  "version": "0.1.0",
+  "description": "Shared types and MQTT protocol definitions for the Qrop autonomous farming system",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist/",
+    "schemas/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qrop-io/qrop-protocol"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5"
+  }
+}

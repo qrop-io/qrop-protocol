@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qrop.io/schemas/mission-progress.json",
+  "title": "MissionProgress",
+  "description": "Mission execution progress. Published to qrop/robots/{id}/events/mission/progress",
+  "type": "object",
+  "required": ["mission_id", "robot_id", "timestamp", "progress_pct"],
+  "properties": {
+    "mission_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "robot_id": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "Unix timestamp in seconds"
+    },
+    "progress_pct": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Percentage of mission completed"
+    },
+    "waypoints_completed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "waypoints_total": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "current_position": {
+      "$ref": "geo-position.json"
+    },
+    "eta_seconds": {
+      "type": ["integer", "null"],
+      "description": "Estimated seconds to mission completion"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["in_progress", "paused", "completed", "failed"]
+    },
+    "error_message": {
+      "type": ["string", "null"],
+      "description": "Error description if status is failed"
+    }
+  }
+}

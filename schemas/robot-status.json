@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qrop.io/schemas/robot-status.json",
+  "title": "RobotStatus",
+  "description": "Robot heartbeat published to qrop/robots/{robot_id}/status",
+  "type": "object",
+  "required": ["robot_id", "robot_type", "status", "timestamp"],
+  "properties": {
+    "robot_id": {
+      "type": "string",
+      "description": "Unique robot identifier (e.g. scout-001)"
+    },
+    "robot_type": {
+      "type": "string",
+      "enum": ["scout", "weeder", "drone"],
+      "description": "Robot class"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["online", "offline", "busy", "error", "charging", "returning_home"],
+      "description": "Current operational state"
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "Unix timestamp in seconds"
+    },
+    "battery_pct": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Battery charge percentage"
+    },
+    "position": {
+      "$ref": "geo-position.json",
+      "description": "Current GPS position"
+    },
+    "current_mission_id": {
+      "type": ["string", "null"],
+      "description": "ID of the mission currently being executed, or null"
+    },
+    "firmware_version": {
+      "type": "string",
+      "description": "Firmware semver (e.g. 0.1.0)"
+    },
+    "uptime_s": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Seconds since last boot"
+    }
+  }
+}
