@@ -1,0 +1,23 @@
+{
+  "name": "@qrop/simulator",
+  "version": "0.1.0",
+  "description": "Simulates Qrop robots publishing MQTT telemetry for development",
+  "main": "dist/simulator/src/index.js",
+  "bin": {
+    "qrop-simulator": "dist/simulator/src/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "mqtt": "^5.10.0"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "tsx": "^4",
+    "@types/node": "^22"
+  },
+  "license": "MIT"
+}
